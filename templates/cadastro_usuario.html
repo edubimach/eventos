@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuário</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Cadastro de Usuário</h1>
+        <form method="POST">
+    <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" name="nome" required>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" class="form-control" name="email" required>
+    </div>
+    <div class="mb-3">
+        <label for="telefone" class="form-label">Telefone (com DDI e DDD)</label>
+        <input type="text" class="form-control" name="telefone" placeholder="+55 11 91234-5678" pattern="^\+\d{1,3}\s\d{2}\s9\d{4}-\d{4}$" required>
+        <small class="form-text text-muted">Formato: +55 11 91234-5678</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>
+        <a href="/">Voltar para a página inicial</a>
+    </div>
+
+</body>
+</html>
