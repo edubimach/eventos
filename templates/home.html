@@ -9,6 +9,23 @@
 </head>
 <body>
 
+    <!-- Navbar com botão "Sair" -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Sistema de Eventos</a>
+            <div class="d-flex">
+                {% if current_user.is_authenticated %}
+                    <!-- Link para a página de administração -->
+                    {% if current_user.is_admin %}
+                        <a href="{{ url_for('admin') }}" class="btn btn-outline-light me-2">Administração</a>
+                    {% endif %}
+                    <!-- Link de logout -->
+                    <a href="{{ url_for('logout') }}" class="btn btn-outline-light">Sair</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
     <div class="container mt-5">
         <h1 class="text-center mb-4">Lista de Eventos</h1>
 
@@ -32,12 +49,6 @@
                             <p class="card-text">{{ evento.descricao }}</p>
                             <p><strong>Data do Evento:</strong> {{ evento.data_evento }}</p>
 
-                            {% if evento.usuario %}
-                                <p><strong>Usuário Sorteado:</strong> {{ evento.usuario.nome }}</p>
-                            {% else %}
-                                <p><strong>Usuário Sorteado:</strong> Nenhum</p>
-                            {% endif %}
-
                             <!-- Botão Sortear (ativo ou desativado) -->
                             {% if not evento.usuario %}
                                 <form action="{{ url_for('sortear_usuario', evento_id=evento.id) }}" method="POST" class="d-inline">
@@ -47,17 +58,17 @@
                                 <button class="btn btn-secondary mb-2" disabled>Usuário já sorteado</button>
                             {% endif %}
 
-                            <!-- Botão Limpar Sorteio (aparece somente se houver usuário sorteado) -->
+                            <!-- Botão Limpar Sorteio -->
                             {% if evento.usuario %}
                                 <form action="{{ url_for('limpar_sorteio', evento_id=evento.id) }}" method="POST" class="d-inline">
                                     <button type="submit" class="btn btn-outline-danger mb-2">Limpar Sorteio</button>
                                 </form>
                             {% endif %}
 
-                            <!-- Link para ver detalhes -->
+                            <!-- Detalhes -->
                             <a href="{{ url_for('evento_detalhes', evento_id=evento.id) }}" class="btn btn-secondary mb-2">Ver Detalhes</a>
 
-                            <!-- Formulário para excluir evento -->
+                            <!-- Excluir -->
                             <form action="{{ url_for('excluir_evento', evento_id=evento.id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este evento?');" class="d-inline">
                                 <button type="submit" class="btn btn-danger mb-2">Excluir Evento</button>
                             </form>

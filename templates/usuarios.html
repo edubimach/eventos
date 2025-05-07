@@ -19,6 +19,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Telefone</th>
                     <th scope="col">Evento Associado</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +29,13 @@
                         <td>{{ usuario.nome }}</td>
                         <td>{{ usuario.email }}</td>
                         <td>{{ usuario.telefone }}</td>
-                        <td>{{ usuario.evento_id if usuario.evento_id else 'Nenhum' }}</td>
+                        <td>{{ usuario.evento.nome if usuario.evento else 'Nenhum Evento' }}</td>  <!-- Exibe o nome do evento associado -->
+                        <td>
+                            <!-- Botão para excluir o usuário -->
+                            <form action="{{ url_for('excluir_usuario', usuario_id=usuario.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
