@@ -1,37 +1,31 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.pyc
-*.pdb
-*.egg-info/
-.eggs/
+# Arquivos de sistema
+.DS_Store          # macOS
+Thumbs.db          # Windows
 
-# SQLite
-*.db
-*.sqlite3
+# Arquivos de IDE/Editor
+.vscode/           # Visual Studio Code
+.idea/             # JetBrains IDEs (PyCharm, WebStorm, etc.)
+*.iml              # JetBrains project files
 
-# Virtual environment
-venv/
-env/
-ENV/
-.venv/
+# Ambiente virtual
+venv/              # Diretório do ambiente virtual Python
+env/               # Outro nome comum para ambientes virtuais
 
-# Flask
-instance/
-.env
+# Arquivos de configuração do Python
+*.pyc              # Arquivos compilados do Python
+*.pyo              # Arquivos de otimização do Python
+__pycache__/       # Diretório de arquivos compilados do Python
 
-# PyCharm
-.idea/
+# Arquivos de dependências
+*.env              # Arquivos de ambiente
+*.sqlite           # Banco de dados SQLite (caso esteja utilizando)
+instance/          # Configurações de instância do Flask
 
-# VSCode
-.vscode/
+# Logs
+*.log              # Arquivos de log
+*.log.*            # Arquivos de log rotacionados
 
-# MacOS/Linux/Windows
-.DS_Store
-Thumbs.db
-
-# Alembic migration cache
-migrations/__pycache__/
-migrations/versions/__pycache__/
+# Arquivos temporários do editor de texto
+*~                 # Arquivos temporários do vim
+*.swp              # Arquivos temporários do vim
+*.swo              # Arquivos temporários do vim
