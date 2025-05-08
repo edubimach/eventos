@@ -1,17 +1,16 @@
-from models import db, UsuarioLogin
 from app import app
+from models import db, UsuarioLogin
+
+# Substitua pelo e-mail do usuário que deseja promover
+EMAIL_USUARIO = 'duka.pedrosa@gmail.com'  # <<== coloque aqui seu e-mail
 
 with app.app_context():
-    if UsuarioLogin.query.filter_by(email='admin@admin.com').first():
-        print("Administrador já existe.")
-    else:
-        admin = UsuarioLogin(
-            nome='Eduardo Pedrosa Machado',
-            email='duka.pedrosa@gmail.com',
-            is_admin=True,
-            aprovado=True  # já aprovado
-        )
-        admin.set_senha('@Edu23@Mach84')  # substitua por uma senha segura
-        db.session.add(admin)
+    usuario = UsuarioLogin.query.filter_by(email=EMAIL_USUARIO).first()
+
+    if usuario:
+        usuario.is_admin = True
+        usuario.aprovado = True  # garantir que esteja aprovado também
         db.session.commit()
-        print("Administrador criado com sucesso.")
+        print(f"Usuário {usuario.nome} foi promovido a administrador com sucesso!")
+    else:
+        print("Usuário não encontrado.")

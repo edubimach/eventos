@@ -20,7 +20,7 @@ class UsuarioLogin(db.Model, UserMixin):
         return check_password_hash(self.senha_hash, senha)
 
     def __repr__(self):
-        return f"<UsuarioLogin {self.nome}, {self.email}>"
+        return f"<usuarioLogin {self.nome}, {self.email}>"
 
 class Usuario(db.Model):
     __tablename__ = 'usuario'

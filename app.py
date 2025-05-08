@@ -88,20 +88,21 @@ from flask import session, redirect, url_for, flash, render_template
 from models import UsuarioLogin  # Supondo que você tenha o modelo de dados correto
 
 @app.route('/admin', methods=['GET', 'POST'])
-@login_required  # Garante que o usuário esteja logado
+@login_required
 def admin():
-    if not current_user.is_admin:  # Verifica se o usuário é um administrador
+    if not current_user.is_admin:
         flash('Você precisa ser um administrador para acessar essa página', 'danger')
         return redirect(url_for('home'))
 
-    usuarios_pendentes = UsuarioLogin.query.filter_by(aprovado=False).all()
-    return render_template('admin.html', usuarios_pendentes=usuarios_pendentes)
+    # Carregar usuários aprovados explicitamente
+    usuarios_aprovados = UsuarioLogin.query.filter(UsuarioLogin.aprovado == True).all()
 
+    return render_template('admin.html', usuarios_aprovados=usuarios_aprovados)
 
 @app.route('/aprovar_usuario/<int:usuario_id>', methods=['POST'])
-@login_obrigatorio
+@login_required
 def aprovar_usuario(usuario_id):
-    if not session.get('is_admin'):
+    if not current_user.is_admin:
         flash('Ação não permitida.', 'danger')
         return redirect(url_for('home'))
 
@@ -109,12 +110,13 @@ def aprovar_usuario(usuario_id):
     usuario.aprovado = True
     db.session.commit()
     flash(f'Usuário {usuario.nome} aprovado com sucesso!', 'success')
-    return redirect(url_for('admin'))
+    return redirect(url_for('admin_page'))
+
 
 @app.route('/rejeitar_usuario/<int:usuario_id>', methods=['POST'])
-@login_obrigatorio
+@login_required
 def rejeitar_usuario(usuario_id):
-    if not session.get('is_admin'):
+    if not current_user.is_admin:
         flash('Ação não permitida.', 'danger')
         return redirect(url_for('home'))
 
@@ -122,7 +124,8 @@ def rejeitar_usuario(usuario_id):
     db.session.delete(usuario)
     db.session.commit()
     flash(f'Usuário {usuario.nome} rejeitado e removido.', 'danger')
-    return redirect(url_for('admin'))
+    return redirect(url_for('admin_page'))
+
 
 @app.route('/home')
 @login_obrigatorio
@@ -139,8 +142,13 @@ def evento_detalhes(evento_id):
 @app.route('/usuarios')
 @login_obrigatorio
 def lista_usuarios():
-    usuarios = Usuario.query.all()
+    if not session.get('is_admin'):
+        flash('Ação não permitida.', 'danger')
+        return redirect(url_for('home'))
+
+    usuarios = UsuarioLogin.query.all()
     return render_template('usuarios.html', usuarios=usuarios)
+
 
 @app.route('/cadastro_evento', methods=['GET', 'POST'])
 @login_obrigatorio
@@ -229,6 +237,35 @@ def limpar_sorteio(evento_id):
     db.session.commit()
     flash(f'O sorteio do evento "{evento.nome}" foi limpo com sucesso.', 'info')
     return redirect(url_for('home'))
+
+@app.route('/usuarios_cadastrados')
+@login_required
+def usuarios_cadastrados():
+    if not current_user.is_admin:
+        flash('Você precisa ser um administrador para acessar esta página', 'danger')
+        return redirect(url_for('home'))
+
+    usuarios = Usuario.query.all()
+    return render_template('usuarios_cadastrados.html', usuarios=usuarios)
+
+# ... (importações e configurações anteriores)
+
+@app.route('/admin', methods=['GET', 'POST'])
+@login_required
+def admin_page():
+    # Verificar se o usuário está aprovado antes de continuar
+    if not current_user.is_admin:
+        flash('Você precisa ser um administrador para acessar essa página', 'danger')
+        return redirect(url_for('home'))
+
+    if not current_user.aprovado:
+        flash('Sua conta ainda não foi aprovada.', 'warning')
+        return redirect(url_for('home'))  # Ou outra página apropriada
+
+    usuarios_pendentes = UsuarioLogin.query.filter_by(aprovado=False).all()
+    usuarios_aprovados = UsuarioLogin.query.filter_by(aprovado=True).all()
+    return render_template('admin.html', usuarios_pendentes=usuarios_pendentes, usuarios_aprovados=usuarios_aprovados)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
