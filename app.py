@@ -71,7 +71,9 @@ def cadastro():
         db.session.add(novo_usuario)
         db.session.commit()
         flash('Cadastro realizado com sucesso! Aguarde aprovação.', 'success')
-        return redirect(url_for('login'))
+
+        # Redirecionar para a tela de administração
+        return redirect(url_for('admin'))
 
     return render_template('cadastro.html')
 
@@ -94,10 +96,14 @@ def admin():
         flash('Você precisa ser um administrador para acessar essa página', 'danger')
         return redirect(url_for('home'))
 
-    # Carregar usuários aprovados explicitamente
-    usuarios_aprovados = UsuarioLogin.query.filter(UsuarioLogin.aprovado == True).all()
+    # Carregar usuários aprovados e pendentes
+    usuarios_pendentes = UsuarioLogin.query.filter_by(aprovado=False).all()
+    usuarios_aprovados = UsuarioLogin.query.filter_by(aprovado=True).all()
 
-    return render_template('admin.html', usuarios_aprovados=usuarios_aprovados)
+    return render_template('admin.html',
+                           usuarios_pendentes=usuarios_pendentes,
+                           usuarios_aprovados=usuarios_aprovados)
+
 
 @app.route('/aprovar_usuario/<int:usuario_id>', methods=['POST'])
 @login_required
@@ -110,7 +116,8 @@ def aprovar_usuario(usuario_id):
     usuario.aprovado = True
     db.session.commit()
     flash(f'Usuário {usuario.nome} aprovado com sucesso!', 'success')
-    return redirect(url_for('admin_page'))
+    return redirect(url_for('admin'))  # Redireciona para a página de administração
+
 
 
 @app.route('/rejeitar_usuario/<int:usuario_id>', methods=['POST'])
@@ -201,11 +208,25 @@ def excluir_evento(evento_id):
 @app.route('/excluir_usuario/<int:usuario_id>', methods=['POST'])
 @login_obrigatorio
 def excluir_usuario(usuario_id):
-    usuario = Usuario.query.get_or_404(usuario_id)
+    usuario = UsuarioLogin.query.get_or_404(usuario_id)  # <-- corrigido aqui
     db.session.delete(usuario)
     db.session.commit()
     flash('Usuário excluído com sucesso.', 'info')
     return redirect(url_for('lista_usuarios'))
+
+@app.route('/excluir_usuario_aprovado/<int:usuario_id>', methods=['POST'])
+@login_required
+def excluir_usuario_aprovado(usuario_id):
+    if not current_user.is_admin:
+        flash('Ação não permitida.', 'danger')
+        return redirect(url_for('home'))
+
+    usuario = UsuarioLogin.query.get_or_404(usuario_id)
+    db.session.delete(usuario)
+    db.session.commit()
+    flash(f'Usuário {usuario.nome} excluído com sucesso.', 'info')
+    return redirect(url_for('admin'))
+
 
 @app.route('/sortear/<int:evento_id>', methods=['POST'])
 @login_obrigatorio

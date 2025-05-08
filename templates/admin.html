@@ -68,6 +68,7 @@
                         <th>Nome</th>
                         <th>Email</th>
                         <th>Administrador</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,6 +82,11 @@
                                 {% else %}
                                     <span class="badge bg-secondary">Não</span>
                                 {% endif %}
+                            </td>
+                            <td>
+                                <form action="{{ url_for('excluir_usuario_aprovado', usuario_id=usuario.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                </form>
                             </td>
                         </tr>
                     {% endfor %}
