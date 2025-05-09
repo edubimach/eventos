@@ -38,3 +38,5 @@ class Evento(db.Model):
     descricao = db.Column(db.String(200))
     data_evento = db.Column(db.Date)
     telefone = db.Column(db.String(20))
+    palestrantes = db.Column(db.String(255), nullable=True)  # Campo para salvar os palestrantes
+

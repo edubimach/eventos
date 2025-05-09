@@ -166,35 +166,86 @@ def cadastro_evento():
         data_evento = datetime.strptime(request.form['data_evento'], '%Y-%m-%d').date()
         telefone = request.form.get('telefone', None)
 
+        # Pega os palestrantes e separa por vírgula
+        palestrantes = request.form.get('speakers', '')
+
+        # Separa os palestrantes em uma lista, removendo espaços extras
+        lista_palestrantes = [palestrante.strip() for palestrante in palestrantes.split(',') if palestrante.strip()]
+
+        # Crie o novo evento
         novo_evento = Evento(nome=nome, descricao=descricao, data_evento=data_evento, telefone=telefone)
+
+        # Aqui você pode escolher como salvar os palestrantes: como string separada por vírgula
+        novo_evento.palestrantes = ', '.join(lista_palestrantes)
+
         db.session.add(novo_evento)
         db.session.commit()
+
         flash('Evento cadastrado com sucesso!', 'success')
         return redirect(url_for('home'))
+
     return render_template('cadastro_evento.html')
+
 
 @app.route('/cadastro_usuario', methods=['GET', 'POST'])
 @login_obrigatorio
 def cadastro_usuario():
+    eventos = Evento.query.all()  # Para popular o select no HTML
+
     if request.method == 'POST':
         nome = request.form['nome']
         email = request.form['email']
         telefone = request.form['telefone']
+        evento_id = request.form.get('evento_id')  # Pode ser None
 
         if Usuario.query.filter_by(email=email).first():
             flash('Este e-mail já está cadastrado.', 'danger')
             return redirect(url_for('cadastro_usuario'))
 
-        novo_usuario = Usuario(nome=nome, email=email, telefone=telefone)
+        novo_usuario = Usuario(
+            nome=nome,
+            email=email,
+            telefone=telefone,
+            evento_id=int(evento_id) if evento_id else None  # Associa o evento, se selecionado
+        )
+
         db.session.add(novo_usuario)
         try:
             db.session.commit()
             flash('Usuário cadastrado com sucesso!', 'success')
-            return redirect(url_for('home'))
+            return redirect(url_for('usuarios_cadastrados'))  # Certifique-se de que esta rota lista os usuários
         except IntegrityError:
             db.session.rollback()
             flash('Erro ao cadastrar usuário.', 'danger')
-    return render_template('cadastro_usuario.html')
+
+    return render_template('cadastro_usuario.html', eventos=eventos)
+
+
+@app.route('/editar_usuario/<int:usuario_id>', methods=['GET', 'POST'])
+@login_obrigatorio
+def editar_usuario(usuario_id):
+    usuario = Usuario.query.get_or_404(usuario_id)
+    eventos = Evento.query.all()
+
+    if request.method == 'POST':
+        usuario.nome = request.form['nome']
+        usuario.email = request.form['email']
+        usuario.telefone = request.form['telefone']
+        evento_id = request.form.get('evento_id')
+
+        usuario.evento_id = int(evento_id) if evento_id else None
+
+        try:
+            db.session.commit()
+            flash('Usuário atualizado com sucesso!', 'success')
+            return redirect(url_for('usuarios_cadastrados'))
+        except Exception as e:
+            db.session.rollback()
+            flash('Erro ao atualizar usuário.', 'danger')
+
+    return render_template('editar_usuario.html', usuario=usuario, eventos=eventos)
+
+
 
 @app.route('/excluir_evento/<int:evento_id>', methods=['POST'])
 @login_obrigatorio
@@ -286,6 +337,14 @@ def admin_page():
     usuarios_pendentes = UsuarioLogin.query.filter_by(aprovado=False).all()
     usuarios_aprovados = UsuarioLogin.query.filter_by(aprovado=True).all()
     return render_template('admin.html', usuarios_pendentes=usuarios_pendentes, usuarios_aprovados=usuarios_aprovados)
+
+@app.route('/calendario')
+@login_obrigatorio
+def calendario():
+    eventos = Evento.query.all()
+    return render_template('calendario.html', eventos=eventos)
+
+
 
 
 if __name__ == '__main__':

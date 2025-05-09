@@ -1,27 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Usuário</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
-<body>
+<body style="background-color: #F4F4F9;">
 
-    <div class="container mt-5">
-        <h1>Editar Usuário</h1>
-        <form action="{{ url_for('editar_usuario', usuario_id=usuario.id) }}" method="POST">
-            <div class="mb-3">
-                <label for="nome" class="form-label">Nome</label>
-                <input type="text" id="nome" name="nome" class="form-control" value="{{ usuario.nome }}" required>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">E-mail</label>
-                <input type="email" id="email" name="email" class="form-control" value="{{ usuario.email }}" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-        </form>
-    </div>
+<div class="container mt-5">
+    <h1 class="mt-5" style="color: #1C407D;">Editar Usuário</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="nome" style="color: #1C407D;">Nome</label>
+            <input type="text" class="form-control" name="nome" value="{{ usuario.nome }}" required>
+        </div>
+        <div class="form-group">
+            <label for="email" style="color: #1C407D;">Email</label>
+            <input type="email" class="form-control" name="email" value="{{ usuario.email }}" required>
+        </div>
+        <div class="form-group">
+            <label for="telefone" style="color: #1C407D;">Telefone</label>
+            <input type="text" class="form-control" name="telefone" value="{{ usuario.telefone }}" required>
+        </div>
+        <div class="form-group">
+            <label for="evento_id" style="color: #1C407D;">Evento Associado</label>
+            <select class="form-control" name="evento_id">
+                <option value="">-- Nenhum --</option>
+                {% for evento in eventos %}
+                    <option value="{{ evento.id }}" {% if usuario.evento_id == evento.id %}selected{% endif %}>
+                        {{ evento.nome }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success" style="background-color: #1C407D; color: white;">Salvar Alterações</button>
+        <a href="{{ url_for('usuarios_cadastrados') }}" class="btn btn-secondary" style="background-color: #6C757D; color: white;">Cancelar</a>
+    </form>
+</div>
 
 </body>
 </html>

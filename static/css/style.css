@@ -1,70 +1,132 @@
-/* Definindo o layout geral */
+/* Fonte e fundo geral */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #F5F5F5; /* Cinza muito claro para contraste com container */
     margin: 0;
     padding: 0;
+    color: #000000; /* Preto */
 }
 
-/* Container principal para centralizar conteúdo */
+/* Container principal */
 .container {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
     padding: 30px;
-    background-color: #fff;
+    background-color: #FFFFFF; /* Branco */
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(28, 64, 125, 0.2); /* Sombra com tom do azul PA */
     margin-top: 50px;
 }
 
-/* Estilo do cabeçalho */
-h1 {
-    color: #333;
-    font-size: 2rem;
+/* Cabeçalho */
+h1, h2, h3 {
+    color: #1C407D; /* Azul PA */
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* Estilos para os campos de entrada */
+/* Inputs e textarea */
 input[type="text"],
 input[type="email"],
 input[type="date"],
+select,
 textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #BCBEC0; /* Cinza */
     border-radius: 4px;
-    box-sizing: border-box;
     font-size: 1rem;
+    box-sizing: border-box;
 }
 
-/* Estilo para o botão */
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
+/* Botões principais */
+button,
+.btn {
+    padding: 10px 20px;
+    background-color: #1C407D; /* Azul PA */
+    color: #FFFFFF; /* Branco */
     border: none;
     border-radius: 4px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #0056b3;
+button:hover,
+.btn:hover {
+    background-color: #163262; /* Azul PA mais escuro no hover */
 }
 
-/* Estilo para os links */
+/* Botão secundário - Amarelo PA */
+.btn-warning {
+    background-color: #F5D010;
+    color: #000000; /* Preto para contraste */
+}
+
+.btn-warning:hover {
+    background-color: #e0bf0f;
+}
+
+/* Botão de exclusão - vermelho claro com base neutra */
+.btn-danger {
+    background-color: #dc3545;
+    color: #FFFFFF;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Link padrão */
 a {
-    display: inline-block;
-    text-align: center;
-    margin-top: 20px;
-    color: #007bff;
+    color: #1C407D; /* Azul PA */
     text-decoration: none;
 }
 
 a:hover {
     text-decoration: underline;
+}
+
+/* Tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th {
+    background-color: #1C407D;
+    color: #FFFFFF;
+    padding: 10px;
+    text-align: left;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #BCBEC0; /* Cinza */
+}
+
+/* Mensagens flash */
+.alert {
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.alert-success {
+    background-color: #DFF0D8;
+    color: #3C763D;
+}
+
+.alert-danger {
+    background-color: #F2DEDE;
+    color: #A94442;
+}
+
+.alert-warning {
+    background-color: #FCF8E3;
+    color: #8A6D3B;
 }

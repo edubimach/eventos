@@ -1,33 +1,47 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Usuário</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
-<body>
+<body style="background-color: #F4F4F9;">
 
-    <div class="container">
-        <h1>Cadastro de Usuário</h1>
-        <form method="POST">
-    <div class="mb-3">
-        <label for="nome" class="form-label">Nome</label>
-        <input type="text" class="form-control" name="nome" required>
-    </div>
-    <div class="mb-3">
-        <label for="email" class="form-label">E-mail</label>
-        <input type="email" class="form-control" name="email" required>
-    </div>
-    <div class="mb-3">
-        <label for="telefone" class="form-label">Telefone (com DDI e DDD)</label>
-        <input type="text" class="form-control" name="telefone" placeholder="+55 11 91234-5678" pattern="^\+\d{1,3}\s\d{2}\s9\d{4}-\d{4}$" required>
-        <small class="form-text text-muted">Formato: +55 11 91234-5678</small>
-    </div>
-    <button type="submit" class="btn btn-primary">Cadastrar</button>
-</form>
-        <a href="/">Voltar para a página inicial</a>
-    </div>
+<div class="container mt-5">
+    <h1 class="text-center" style="color: #1C407D;">Cadastro de Usuário</h1>
+
+    <!-- Formulário de cadastro -->
+    <form method="POST" action="{{ url_for('cadastro_usuario') }}">
+        <div class="form-group">
+            <label for="nome" style="color: #1C407D;">Nome:</label>
+            <input type="text" class="form-control" id="nome" name="nome" required style="border-color: #1C407D;">
+        </div>
+
+        <div class="form-group">
+            <label for="email" style="color: #1C407D;">E-mail:</label>
+            <input type="email" class="form-control" id="email" name="email" required style="border-color: #1C407D;">
+        </div>
+
+        <div class="form-group">
+            <label for="telefone" style="color: #1C407D;">Telefone:</label>
+            <input type="text" class="form-control" id="telefone" name="telefone" required style="border-color: #1C407D;">
+        </div>
+
+        <div class="form-group">
+            <label for="evento_id" style="color: #1C407D;">Evento Associado:</label>
+            <select class="form-control" id="evento_id" name="evento_id" style="border-color: #1C407D;">
+                <option value="">Nenhum</option>
+                {% for evento in eventos %}
+                    <option value="{{ evento.id }}">{{ evento.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn" style="background-color: #F5D010; color: #1C407D;">Cadastrar Usuário</button>
+        <a href="{{ url_for('home') }}" class="btn" style="background-color: #1C407D; color: white;">Voltar para a Home</a>
+    </form>
+</div>
 
 </body>
 </html>

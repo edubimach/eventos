@@ -2,46 +2,59 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Evento</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-    <div class="container">
-        <h2>Cadastro de Evento</h2>
+<body style="background-color: #F4F4F9;">
 
-        <!-- Exibindo mensagens de flash -->
+    <div class="container mt-5">
+        <h2 class="text-center" style="color: #1C407D;">Cadastro de Evento</h2>
+
+        <!-- Mensagens de flash -->
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            <ul class="alert alert-info">
-            {% for category, message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
+            <div class="alert alert-{{ category }}" style="background-color: #F5D010; color: #1C407D;">
+                <ul class="mb-0">
+                {% for category, message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            </div>
         {% endif %}
         {% endwith %}
 
         <form method="POST" action="{{ url_for('cadastro_evento') }}">
             <div class="form-group">
-                <label for="nome">Nome do Evento:</label>
-                <input type="text" class="form-control" id="nome" name="nome" required>
+                <label for="nome" style="color: #1C407D;">Nome do Evento:</label>
+                <input type="text" class="form-control" id="nome" name="nome" required style="border-color: #1C407D;">
             </div>
 
             <div class="form-group">
-                <label for="descricao">Descrição do Evento:</label>
-                <input type="text" class="form-control" id="descricao" name="descricao" required>
+                <label for="descricao" style="color: #1C407D;">Descrição do Evento:</label>
+                <input type="text" class="form-control" id="descricao" name="descricao" required style="border-color: #1C407D;">
             </div>
 
             <div class="form-group">
-                <label for="data_evento">Data e Hora do Evento:</label>
-                <input type="date" class="form-control" id="data_evento" name="data_evento" required>
+                <label for="speakers" style="color: #1C407D;">Palestrantes (separados por vírgula):</label>
+                <input type="text" class="form-control" id="speakers" name="speakers" placeholder="Nome dos palestrantes, separados por vírgula" style="border-color: #1C407D;">
             </div>
 
-            <button type="submit" class="btn btn-primary">Cadastrar Evento</button>
+            <div class="form-group">
+                <label for="data_evento" style="color: #1C407D;">Data do Evento:</label>
+                <input type="date" class="form-control" id="data_evento" name="data_evento" required style="border-color: #1C407D;">
+            </div>
+
+            <div class="form-group">
+                <label for="telefone" style="color: #1C407D;">Telefone:</label>
+                <input type="text" class="form-control" id="telefone" name="telefone" style="border-color: #1C407D;">
+            </div>
+
+            <button type="submit" class="btn" style="background-color: #F5D010; color: #1C407D;">Cadastrar Evento</button>
+            <a href="{{ url_for('home') }}" class="btn" style="background-color: #1C407D; color: white;">Voltar para Home</a>
         </form>
     </div>
 
-    <!-- Scripts necessários para o Bootstrap funcionar corretamente -->
+    <!-- Scripts Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

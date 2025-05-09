@@ -6,14 +6,19 @@
     <title>Detalhes do Evento</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body style="background-color: #F4F4F9;">
 
-    <div class="container">
-        <h1>Detalhes do Evento: {{ evento.nome }}</h1>
-        <p><strong>Descrição:</strong> {{ evento.descricao }}</p>
-        <p><strong>Data do Evento:</strong> {{ evento.data_evento }}</p>
+    <div class="container mt-5">
+        <h1 class="mb-4" style="color: #1C407D;">Detalhes do Evento: {{ evento.nome }}</h1>
 
-        <a href="{{ url_for('home') }}" class="btn btn-primary">Voltar para a lista de eventos</a>
+        <div class="card p-4" style="background-color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 8px;">
+            <p><strong style="color: #1C407D;">Descrição:</strong> {{ evento.descricao }}</p>
+            <p><strong style="color: #1C407D;">Data do Evento:</strong> {{ evento.data_evento }}</p>
+            <p><strong style="color: #1C407D;">Horário:</strong> 19:00 - 20:30</p> <!-- Horário fixo -->
+            <p><strong style="color: #1C407D;">Palestrantes:</strong> {{ evento.palestrantes if evento.palestrantes else 'Não informado' }}</p> <!-- Palestrantes -->
+        </div>
+
+        <a href="{{ url_for('home') }}" class="btn btn-primary mt-4" style="background-color: #1C407D; color: white;">Voltar para a lista de eventos</a>
     </div>
 
 </body>

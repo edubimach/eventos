@@ -32,18 +32,17 @@
                         <td>{{ usuario.evento.nome if usuario.evento else 'Nenhum Evento' }}</td>  <!-- Exibe o nome do evento associado -->
                         <td>
                             <!-- Botão para excluir o usuário -->
-<form action="{{ url_for('excluir_usuario', usuario_id=usuario.id) }}" method="POST" style="display:inline;">
-    <button type="submit" class="btn btn-danger">Excluir</button>
-</form>
-
-
+                            <form action="{{ url_for('excluir_usuario', usuario_id=usuario.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
 
-        <a href="{{ url_for('home') }}" class="btn btn-primary mt-3">Voltar para a Home</a>
+        <!-- Botão para voltar à Home -->
+        <a href="{{ url_for('home') }}" class="btn" style="background-color: #1C407D; color: white;">Voltar para a Home</a>
     </div>
 </body>
 </html>

@@ -1,48 +1,92 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Login - Sistema de Cadastro de Eventos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        /* Fundo escuro para a página */
+        body {
+            background-color: #333333; /* Fundo escuro */
+            color: #ffffff; /* Texto claro para contraste */
+        }
+
+        /* Container do login com padding e centralização */
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding-top: 50px;
+            background-color: #444444; /* Fundo mais claro para o container */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilo da imagem do logo */
+        .login-logo {
+            width: 100%;
+            max-width: 200px; /* Limita o tamanho do logo */
+            margin-bottom: 20px;
+        }
+
+        /* Estilo dos campos de input */
+        .form-control {
+            background-color: #555555;
+            color: #ffffff;
+            border: 1px solid #777777;
+        }
+
+        .form-control:focus {
+            background-color: #666666;
+            border-color: #888888;
+            color: #ffffff;
+        }
+
+        /* Botão de login */
+        .btn-primary {
+            background-color: #1C407D; /* Cor do botão */
+            border-color: #1C407D;
+        }
+
+        .btn-primary:hover {
+            background-color: #163B66;
+            border-color: #163B66;
+        }
+
+        /* Título principal */
+        .page-title {
+            color: #ffffff; /* Texto branco para o título */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2 class="text-center mb-4">Login</h2>
+    <div class="container">
+        <!-- Título principal -->
+        <h1 class="page-title">Sistema de Cadastro de Eventos</h1>
 
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+        <div class="login-container">
+            <!-- Imagem do logo -->
+            <img src="https://pucangels.org/wp-content/uploads/2024/01/Logo-Fundo-Escuro-e1745421646775.png" alt="Logo" class="login-logo">
 
-            <form method="POST" action="{{ url_for('login') }}">
-                <div class="mb-3">
-                    <label for="email" class="form-label">E-mail</label>
-                    <input type="email" name="email" class="form-control" required>
+            <!-- Formulário de Login -->
+            <h3 class="text-center">Login</h3>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
                 </div>
-
-                <div class="mb-3">
-                    <label for="senha" class="form-label">Senha</label>
-                    <input type="password" name="senha" class="form-control" required>
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="senha" required>
                 </div>
-
-                <button type="submit" class="btn btn-success w-100">Entrar</button>
+                <button type="submit" class="btn btn-primary btn-block">Entrar</button>
             </form>
-
-            <div class="text-center mt-3">
-                <a href="{{ url_for('cadastro') }}">Não tem conta? Cadastre-se</a>
-            </div>
         </div>
     </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

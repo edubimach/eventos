@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +8,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1C407D;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Administração</a>
+            <a class="navbar-brand" href="#" style="color: #F5D010;">Administração</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('home') }}">Página Inicial</a>
+                        <a class="nav-link" href="{{ url_for('home') }}" style="color: #F5D010;">Página Inicial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('logout') }}">Sair</a>
+                        <a class="nav-link" href="{{ url_for('logout') }}" style="color: #F5D010;">Sair</a>
                     </li>
                 </ul>
             </div>
@@ -27,11 +29,11 @@
     </nav>
 
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Usuários Pendentes de Aprovação</h1>
+        <h1 class="text-center mb-4" style="color: #1C407D;">Usuários Pendentes de Aprovação</h1>
 
         {% if usuarios_pendentes %}
             <table class="table table-bordered">
-                <thead class="table-dark">
+                <thead class="table-dark" style="background-color: #1C407D; color: #FFFFFF;">
                     <tr>
                         <th>Nome</th>
                         <th>Email</th>
@@ -45,10 +47,10 @@
                             <td>{{ usuario.email }}</td>
                             <td>
                                 <form action="{{ url_for('aprovar_usuario', usuario_id=usuario.id) }}" method="POST" style="display:inline;">
-                                    <button type="submit" class="btn btn-success btn-sm">Aprovar</button>
+                                    <button type="submit" class="btn" style="background-color: #F5D010; color: #1C407D;">Aprovar</button>
                                 </form>
                                 <form action="{{ url_for('rejeitar_usuario', usuario_id=usuario.id) }}" method="POST" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger btn-sm">Rejeitar</button>
+                                    <button type="submit" class="btn" style="background-color: #DC3545; color: #FFFFFF;">Rejeitar</button>
                                 </form>
                             </td>
                         </tr>
@@ -59,11 +61,11 @@
             <p class="text-center text-muted">Não há usuários pendentes de aprovação.</p>
         {% endif %}
 
-        <h1 class="text-center mb-4 mt-5">Usuários Aprovados</h1>
+        <h1 class="text-center mb-4 mt-5" style="color: #1C407D;">Usuários Aprovados</h1>
 
         {% if usuarios_aprovados %}
             <table class="table table-bordered">
-                <thead class="table-dark">
+                <thead class="table-dark" style="background-color: #1C407D; color: #FFFFFF;">
                     <tr>
                         <th>Nome</th>
                         <th>Email</th>
@@ -78,14 +80,14 @@
                             <td>{{ usuario.email }}</td>
                             <td>
                                 {% if usuario.is_admin %}
-                                    <span class="badge bg-primary">Sim</span>
+                                    <span class="badge" style="background-color: #1C407D; color: #FFFFFF;">Sim</span>
                                 {% else %}
-                                    <span class="badge bg-secondary">Não</span>
+                                    <span class="badge" style="background-color: #BCBEC0; color: #FFFFFF;">Não</span>
                                 {% endif %}
                             </td>
                             <td>
                                 <form action="{{ url_for('excluir_usuario_aprovado', usuario_id=usuario.id) }}" method="POST" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                    <button type="submit" class="btn" style="background-color: #DC3545; color: #FFFFFF;">Excluir</button>
                                 </form>
                             </td>
                         </tr>
@@ -99,5 +101,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

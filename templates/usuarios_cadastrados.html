@@ -7,37 +7,46 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1 class="mt-5">Usuários Cadastrados</h1>
+<div class="container">
+    <h1 class="mt-5">Usuários Cadastrados</h1>
 
-        <table class="table mt-4">
-            <thead>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Evento Associado</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Telefone</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for usuario in usuarios %}
-                    <tr>
-                        <td>{{ usuario.id }}</td>
-                        <td>{{ usuario.nome }}</td>
-                        <td>{{ usuario.email }}</td>
-                        <td>{{ usuario.telefone }}</td>
-                        <td>
-                            <form action="{{ url_for('excluir_usuario', usuario_id=usuario.id) }}" method="POST" style="display:inline;">
-                                <button type="submit" class="btn btn-danger">Excluir</button>
-                            </form>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    <td>{{ usuario.id }}</td>
+                    <td>{{ usuario.nome }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.telefone }}</td>
+                    <td>
+                        {{ usuario.evento.nome if usuario.evento else 'Nenhum' }}
+                    </td>
+                    <td>
+                        <!-- Botão Excluir -->
+                        <form action="{{ url_for('excluir_usuario', usuario_id=usuario.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                        </form>
 
-        <a href="{{ url_for('home') }}" class="btn btn-primary mt-3">Voltar para a Home</a>
-    </div>
+                        <!-- Botão Alterar -->
+                        <a href="{{ url_for('editar_usuario', usuario_id=usuario.id) }}" class="btn btn-warning btn-sm">Alterar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Botão Voltar para Home -->
+    <a href="{{ url_for('home') }}" class="btn" style="background-color: #1C407D; color: white;">Voltar para a Home</a>
+</div>
 </body>
 </html>
