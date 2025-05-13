@@ -6,31 +6,27 @@
     <title>Login - Sistema de Cadastro de Eventos</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
-        /* Fundo escuro para a página */
         body {
-            background-color: #333333; /* Fundo escuro */
-            color: #ffffff; /* Texto claro para contraste */
+            background-color: #333333;
+            color: #ffffff;
         }
 
-        /* Container do login com padding e centralização */
         .login-container {
             max-width: 400px;
             margin: 0 auto;
             padding-top: 50px;
-            background-color: #444444; /* Fundo mais claro para o container */
+            background-color: #444444;
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* Estilo da imagem do logo */
         .login-logo {
             width: 100%;
-            max-width: 200px; /* Limita o tamanho do logo */
+            max-width: 200px;
             margin-bottom: 20px;
         }
 
-        /* Estilo dos campos de input */
         .form-control {
             background-color: #555555;
             color: #ffffff;
@@ -43,9 +39,8 @@
             color: #ffffff;
         }
 
-        /* Botão de login */
         .btn-primary {
-            background-color: #1C407D; /* Cor do botão */
+            background-color: #1C407D;
             border-color: #1C407D;
         }
 
@@ -54,26 +49,32 @@
             border-color: #163B66;
         }
 
-        /* Título principal */
         .page-title {
-            color: #ffffff; /* Texto branco para o título */
+            color: #ffffff;
             text-align: center;
             margin-bottom: 30px;
+        }
+
+        .cadastro-link a {
+            color: #cccccc;
+        }
+
+        .cadastro-link a:hover {
+            text-decoration: underline;
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Título principal -->
         <h1 class="page-title">Sistema de Cadastro de Eventos</h1>
 
         <div class="login-container">
-            <!-- Imagem do logo -->
             <img src="https://pucangels.org/wp-content/uploads/2024/01/Logo-Fundo-Escuro-e1745421646775.png" alt="Logo" class="login-logo">
 
-            <!-- Formulário de Login -->
             <h3 class="text-center">Login</h3>
+
             <form method="POST">
                 <div class="form-group">
                     <label for="email">E-mail</label>
@@ -85,6 +86,10 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Entrar</button>
             </form>
+
+            <div class="text-center mt-3 cadastro-link">
+                <a href="{{ url_for('cadastro') }}">Ainda não tem uma conta? Cadastre-se</a>
+            </div>
         </div>
     </div>
 

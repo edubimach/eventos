@@ -1,3 +1,4 @@
+from forms import CadastroForm
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from models import db, Evento, Usuario, UsuarioLogin
 from flask_migrate import Migrate
@@ -57,10 +58,12 @@ def login():
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
-    if request.method == 'POST':
-        nome = request.form['nome']
-        email = request.form['email']
-        senha = request.form['senha']
+    form = CadastroForm()
+
+    if form.validate_on_submit():
+        nome = form.nome.data
+        email = form.email.data
+        senha = form.senha.data
 
         if UsuarioLogin.query.filter_by(email=email).first():
             flash('Email já cadastrado.', 'warning')
@@ -71,11 +74,10 @@ def cadastro():
         db.session.add(novo_usuario)
         db.session.commit()
         flash('Cadastro realizado com sucesso! Aguarde aprovação.', 'success')
-
-        # Redirecionar para a tela de administração
         return redirect(url_for('admin'))
 
-    return render_template('cadastro.html')
+    return render_template('cadastro.html', form=form)
+
 
 @app.route('/logout')
 def logout():
