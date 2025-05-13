@@ -167,18 +167,20 @@ def cadastro_evento():
         descricao = request.form['descricao']
         data_evento = datetime.strptime(request.form['data_evento'], '%Y-%m-%d').date()
         telefone = request.form.get('telefone', None)
+        comite = request.form.get('comite')  # <-- captura o comitê
 
-        # Pega os palestrantes e separa por vírgula
         palestrantes = request.form.get('speakers', '')
+        lista_palestrantes = [p.strip() for p in palestrantes.split(',') if p.strip()]
 
-        # Separa os palestrantes em uma lista, removendo espaços extras
-        lista_palestrantes = [palestrante.strip() for palestrante in palestrantes.split(',') if palestrante.strip()]
-
-        # Crie o novo evento
-        novo_evento = Evento(nome=nome, descricao=descricao, data_evento=data_evento, telefone=telefone)
-
-        # Aqui você pode escolher como salvar os palestrantes: como string separada por vírgula
-        novo_evento.palestrantes = ', '.join(lista_palestrantes)
+        # Criação do evento com comitê incluído
+        novo_evento = Evento(
+            nome=nome,
+            descricao=descricao,
+            data_evento=data_evento,
+            telefone=telefone,
+            palestrantes=', '.join(lista_palestrantes),
+            comite=comite  # <-- salva no banco
+        )
 
         db.session.add(novo_evento)
         db.session.commit()

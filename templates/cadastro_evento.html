@@ -49,6 +49,24 @@
                 <input type="text" class="form-control" id="telefone" name="telefone" style="border-color: #1C407D;">
             </div>
 
+            <!-- Campo novo: Comitê -->
+            <div class="form-group">
+                <label for="comite" style="color: #1C407D;">Comitê:</label>
+                <select class="form-control" id="comite" name="comite" required style="border-color: #1C407D;">
+                    <option value="" disabled selected>Selecione um comitê</option>
+                    <option value="Comitê de Saúde - PUC angels">Saúde</option>
+                    <option value="Comitê de Impacto Social - PUC angels">Impacto Social</option>
+                    <option value="Comitê de Gestão de Pessoas, Talentos, PeopleTechs e Empregabilidade - PUC angels">Gestão de Pessoas</option>
+                    <option value="Comitê de Marketing, Mídia, Marca e Vendas - PUC angels">Marketing</option>
+                    <option value="Comitê de Liderança Feminina - PUC angels">Liderança Feminina</option>
+                    <option value="Comitê de Educação e EdTechs - PUC angels">Educação</option>
+                    <option value="Comitê de Startups e Pequenas Empresas - PUC angels">Startup/PMEs</option>
+                    <option value="Comitê de Internacionalização - PUC angels">Internacionalização</option>
+                    <option value="Comitê de Inteligência Artificial - PUC angels">Inteligência Artificial (IA)</option>
+                    <option value="Comitê de ESG (Environmental, Social, and Governance) - PUC angels">Comitê ESG</option>
+                </select>
+            </div>
+
             <button type="submit" class="btn" style="background-color: #F5D010; color: #1C407D;">Cadastrar Evento</button>
             <a href="{{ url_for('home') }}" class="btn" style="background-color: #1C407D; color: white;">Voltar para Home</a>
         </form>

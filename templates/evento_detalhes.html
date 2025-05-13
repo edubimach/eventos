@@ -15,7 +15,8 @@
             <p><strong style="color: #1C407D;">Descrição:</strong> {{ evento.descricao }}</p>
             <p><strong style="color: #1C407D;">Data do Evento:</strong> {{ evento.data_evento }}</p>
             <p><strong style="color: #1C407D;">Horário:</strong> 19:00 - 20:30</p> <!-- Horário fixo -->
-            <p><strong style="color: #1C407D;">Palestrantes:</strong> {{ evento.palestrantes if evento.palestrantes else 'Não informado' }}</p> <!-- Palestrantes -->
+            <p><strong style="color: #1C407D;">Palestrantes:</strong> {{ evento.palestrantes if evento.palestrantes else 'Não informado' }}</p>
+            <p><strong style="color: #1C407D;">Comitê:</strong> {{ evento.comite if evento.comite else 'Não informado' }}</p> <!-- Novo campo: Comitê -->
         </div>
 
         <a href="{{ url_for('home') }}" class="btn btn-primary mt-4" style="background-color: #1C407D; color: white;">Voltar para a lista de eventos</a>
